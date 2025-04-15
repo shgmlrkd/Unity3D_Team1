@@ -2,11 +2,13 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
     Animator anim;
     private Slider healthSlider;
+    public TextMeshProUGUI hpText;
     private float maxHealth = 100f;
     private float currentHealth;
     
@@ -43,6 +45,8 @@ public class Player : MonoBehaviour
     {
         healthSlider = GameObject.Find("PlayerHpBar").GetComponent<Slider>();
         currentHealth = maxHealth;
+        Transform textTransform = healthSlider.transform.GetChild(2); // ← 0부터 시작, 3번째 자식은 index 2
+        hpText = textTransform.GetComponent<TextMeshProUGUI>();
 
         if (healthSlider != null)
         {
@@ -50,6 +54,7 @@ public class Player : MonoBehaviour
             healthSlider.value = currentHealth;
         }
         anim = GetComponent<Animator>();
+        healthSlider.AddComponent<Slider>();
     }
 
     void Update()
@@ -58,7 +63,7 @@ public class Player : MonoBehaviour
 
         if (inputDir.sqrMagnitude > 0)
         {
-            anim.SetFloat("Run", inputDir.sqrMagnitude);
+            //anim.SetFloat("Run", inputDir.sqrMagnitude);
             transform.Translate(inputDir.normalized * _playerMoveSpeed * Time.deltaTime, Space.World); //position += inputDir * playerMoveSpeed * Time.deltaTime;
 
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(inputDir), Time.deltaTime * _playerRotateSpeed);
@@ -68,7 +73,7 @@ public class Player : MonoBehaviour
         {
             TakeDamage(10f);
         }
-        anim.SetFloat("Idle", inputDir.sqrMagnitude);
+        //anim.SetFloat("Idle", inputDir.sqrMagnitude);
         // 상태 전이
         /*  if (inputDir.sqrMagnitude == 0)
           {
@@ -116,6 +121,15 @@ public class Player : MonoBehaviour
 
         if (healthSlider != null)
             healthSlider.value = currentHealth;
+
+        if (hpText != null)
+            hpText.text = $"{currentHealth} / {maxHealth}";
+
+        UpdateUI();
+    }
+    private void UpdateUI()
+    {
+
     }
 }
 
