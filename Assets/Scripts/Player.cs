@@ -1,10 +1,15 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    Animator anim;
+    private Slider healthSlider;
+    private float maxHealth = 100f;
+    private float currentHealth;
+    
     public enum State
     {
         Idle,
@@ -36,20 +41,34 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //animator = GetComponent<Animator>();
+        healthSlider = GameObject.Find("PlayerHpBar").GetComponent<Slider>();
+        currentHealth = maxHealth;
+
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = currentHealth;
+        }
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
         Vector3 inputDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        if(inputDir.sqrMagnitude > 0)
+        if (inputDir.sqrMagnitude > 0)
         {
+            anim.SetFloat("Run", inputDir.sqrMagnitude);
             transform.Translate(inputDir.normalized * _playerMoveSpeed * Time.deltaTime, Space.World); //position += inputDir * playerMoveSpeed * Time.deltaTime;
 
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(inputDir), Time.deltaTime * _playerRotateSpeed);
         }
 
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            TakeDamage(10f);
+        }
+        anim.SetFloat("Idle", inputDir.sqrMagnitude);
         // 상태 전이
         /*  if (inputDir.sqrMagnitude == 0)
           {
@@ -90,5 +109,13 @@ public class Player : MonoBehaviour
 
         currentState = newState;
     }*/
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (healthSlider != null)
+            healthSlider.value = currentHealth;
+    }
 }
 
