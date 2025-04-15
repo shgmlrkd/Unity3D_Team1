@@ -27,8 +27,6 @@ public class Player : MonoBehaviour
         get { return _instance; }
     }
 
-    private State currentState = State.Idle;
-
     private float _playerMoveSpeed = 6.0f;
     private float _playerRotateSpeed = 12.0f;
 
