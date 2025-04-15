@@ -1,5 +1,5 @@
-using Cinemachine;
 using UnityEngine;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,5 +24,8 @@ public class GameManager : MonoBehaviour
         GameObject prefab = Resources.Load<GameObject>("Prefabs/Player");
 
         _player = Instantiate(prefab);
+
+        CinemachineVirtualCamera vcam = GameObject.Find("QuarterViewCamera").GetComponent<CinemachineVirtualCamera>();
+        vcam.Follow = _player.transform;
     }
 }
