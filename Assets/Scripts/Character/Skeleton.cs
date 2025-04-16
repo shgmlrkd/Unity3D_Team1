@@ -6,6 +6,9 @@ public class Skeleton : MonoBehaviour
     private MonsterData _monsterData;
 
     private float skeletonRotateSpeed = 5.0f;
+    private float _attackTimer = 0.0f;
+    private bool _isCollidingWithPlayer = false;
+
     void Start()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<Transform>();
@@ -26,6 +29,42 @@ public class Skeleton : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * skeletonRotateSpeed);
             }
+        }
+
+        if (_isCollidingWithPlayer)
+        {
+            _attackTimer += Time.deltaTime;
+            if(_attackTimer >= _monsterData.AttackInterval)
+            {
+                SkeletonAttackPlayer();
+                _attackTimer = 0.0f;
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _isCollidingWithPlayer = true;
+            _attackTimer = _monsterData.AttackInterval;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _isCollidingWithPlayer = false;
+            _attackTimer = 0.0f;
+        }
+    }
+
+    private void SkeletonAttackPlayer()
+    {
+        if (Player.Instance != null)
+        {
+            Player.Instance.TakeDamage(_monsterData.AttackPower);
         }
     }
 }
