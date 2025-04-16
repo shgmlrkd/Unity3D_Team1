@@ -6,7 +6,7 @@ public struct MonsterData
     public int Key;
     public string Name;
     public string Type;
-    public int Hp;
+    public float Hp;
     public float MoveSpeed;
     public int AttackPower;
     public float AttackInterval;
@@ -56,7 +56,7 @@ public class MonsterDataManager : MonoBehaviour
             data.Key = int.Parse(colData[0]);
             data.Name = colData[1];
             data.Type = colData[2];
-            data.Hp = int.Parse(colData[3]);
+            data.Hp = float.Parse(colData[3]);
             data.MoveSpeed = float.Parse(colData[4]);
             data.AttackPower = int.Parse(colData[5]);
             data.AttackInterval = float.Parse(colData[6]);

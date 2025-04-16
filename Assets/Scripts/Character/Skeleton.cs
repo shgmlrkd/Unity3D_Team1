@@ -70,6 +70,11 @@ public class Skeleton : MonoBehaviour
 
     private void GetSkeletonDamage(float attackPower)
     {
+        _monsterData.Hp -= attackPower;
 
+        if (_monsterData.Hp < 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
