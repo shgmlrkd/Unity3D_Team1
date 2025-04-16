@@ -66,10 +66,6 @@ public class Player : MonoBehaviour
         {
             TakeDamage(10f);
         }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            GetExp(10);
-        }
     }
     public void TakeDamage(float amount)
     {

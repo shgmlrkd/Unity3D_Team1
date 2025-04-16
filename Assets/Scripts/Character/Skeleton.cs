@@ -122,6 +122,8 @@ public class Skeleton : MonoBehaviour
         {
             gameObject.SetActive(false);
 
+            _player.GetComponent<Player>().GetExp(_monsterData.Exp);
+
             if (_skeletonHpBarSlider != null)
                 _skeletonHpBarSlider.gameObject.SetActive(false);
         }
