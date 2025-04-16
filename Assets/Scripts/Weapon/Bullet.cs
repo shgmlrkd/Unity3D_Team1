@@ -23,7 +23,6 @@ public class Bullet : MonoBehaviour
 
     public void Fire(Vector3 pos, Vector3 dir, WeaponData data)
     {
-        Debug.Log("총알 스폰 위치: " + pos);
         gameObject.SetActive(true);
 
         transform.position = pos;
@@ -32,5 +31,13 @@ public class Bullet : MonoBehaviour
         _bulletPower = data.AttackPower;
 
         transform.rotation = Quaternion.LookRotation(_direction);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Monster"))
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
