@@ -1,8 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Skeleton : MonoBehaviour
 {
     private Transform _player;
+    private GameObject _skeletonHpBarPrefab;
+    private Slider _skeletonHpBarSlider;
+
+    private Vector3 _skeletonHpBarOffset;
     private MonsterData _monsterData;
 
     private float skeletonRotateSpeed = 5.0f;
@@ -15,6 +20,15 @@ public class Skeleton : MonoBehaviour
     private void OnEnable()
     {
         _skeletonCurHp = _skeletonMaxHp;
+
+        if (_skeletonHpBarSlider != null)
+            _skeletonHpBarSlider.gameObject.SetActive(true);
+    }
+
+    private void Awake()
+    {
+        _skeletonHpBarPrefab = Resources.Load<GameObject>("Prefabs/Monsters/MonsterHpBar");
+        _skeletonHpBarOffset = new Vector3(0, 2.5f, 1);
     }
 
     void Start()
@@ -23,6 +37,12 @@ public class Skeleton : MonoBehaviour
         _monsterData = MonsterDataManager.Instance.GetMonsterData(201);
         _skeletonMaxHp = _monsterData.Hp;
         _skeletonCurHp = _skeletonMaxHp;
+
+        GameObject skeletonhpBarPanel = GameObject.Find("HpBarPanel");
+        GameObject skeletonhpBar = Instantiate(_skeletonHpBarPrefab, skeletonhpBarPanel.transform);
+        _skeletonHpBarSlider = skeletonhpBar.GetComponent<Slider>();
+
+        _skeletonHpBarSlider.gameObject.SetActive(true);
     }
 
     void Update()
@@ -48,6 +68,22 @@ public class Skeleton : MonoBehaviour
             {
                 SkeletonAttackPlayer();
                 _attackTimer = 0.0f;
+            }
+        }
+
+        if (_skeletonHpBarSlider != null && _skeletonHpBarSlider.gameObject.activeSelf)
+        {
+            Vector3 worldPosition = transform.position + _skeletonHpBarOffset;
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+        
+            if (screenPosition.z > 0)
+            {
+                _skeletonHpBarSlider.transform.position = screenPosition;
+                _skeletonHpBarSlider.value = _skeletonCurHp / _skeletonMaxHp;
+            }
+            else
+            {
+                _skeletonHpBarSlider.gameObject.SetActive(false);
             }
         }
     }
@@ -85,6 +121,9 @@ public class Skeleton : MonoBehaviour
         if (_skeletonCurHp < 0)
         {
             gameObject.SetActive(false);
+
+            if (_skeletonHpBarSlider != null)
+                _skeletonHpBarSlider.gameObject.SetActive(false);
         }
     }
 }
