@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject Player
     { get { return _player; } }
 
-    void Start()
+    void Awake()
     {
         _instance = this;
         SpawnPlayer();
@@ -24,8 +24,5 @@ public class GameManager : MonoBehaviour
         GameObject prefab = Resources.Load<GameObject>("Prefabs/Player");
 
         _player = Instantiate(prefab);
-
-        CinemachineVirtualCamera vcam = GameObject.Find("QuarterViewCamera").GetComponent<CinemachineVirtualCamera>();
-        vcam.Follow = _player.transform;
     }
 }
