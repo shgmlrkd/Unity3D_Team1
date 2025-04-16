@@ -67,4 +67,9 @@ public class Skeleton : MonoBehaviour
             Player.Instance.TakeDamage(_monsterData.AttackPower);
         }
     }
+
+    private void GetSkeletonDamage(float attackPower)
+    {
+
+    }
 }
