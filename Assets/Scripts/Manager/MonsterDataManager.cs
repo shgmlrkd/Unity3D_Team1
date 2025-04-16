@@ -17,14 +17,19 @@ public struct MonsterData
     public int exp;
 }
 
-public class DataManager : MonoBehaviour
+public class MonsterDataManager : MonoBehaviour
 {
-    public static DataManager Instance;
+    private static MonsterDataManager _instance;
+
+    public static MonsterDataManager Instance
+    {
+        get { return _instance; }
+    }
 
     private Dictionary<int, MonsterData> _monsterDatas = new Dictionary<int, MonsterData>();
     private void Awake()
     {
-        Instance = this;
+        _instance = this;
 
         LoadMonsterData();
     }
@@ -40,7 +45,7 @@ public class DataManager : MonoBehaviour
 
         string[] rowData = textAsset.text.Split("\r\n");
 
-        for(int i = 1; i < rowData.Length; i++)
+        for (int i = 1; i < rowData.Length; i++)
         {
             string[] colData = rowData[i].Split(",");
 
