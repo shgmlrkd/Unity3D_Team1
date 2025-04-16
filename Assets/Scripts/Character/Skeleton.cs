@@ -7,12 +7,22 @@ public class Skeleton : MonoBehaviour
 
     private float skeletonRotateSpeed = 5.0f;
     private float _attackTimer = 0.0f;
+    private float _skeletonMaxHp;
+    private float _skeletonCurHp;
+
     private bool _isCollidingWithPlayer = false;
+
+    private void OnEnable()
+    {
+        _skeletonCurHp = _skeletonMaxHp;
+    }
 
     void Start()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<Transform>();
         _monsterData = MonsterDataManager.Instance.GetMonsterData(201);
+        _skeletonMaxHp = _monsterData.Hp;
+        _skeletonCurHp = _skeletonMaxHp;
     }
 
     void Update()
@@ -68,11 +78,11 @@ public class Skeleton : MonoBehaviour
         }
     }
 
-    private void GetSkeletonDamage(float attackPower)
+    public void GetSkeletonDamage(float attackPower)
     {
-        _monsterData.Hp -= attackPower;
+        _skeletonCurHp -= attackPower;
 
-        if (_monsterData.Hp < 0)
+        if (_skeletonCurHp < 0)
         {
             gameObject.SetActive(false);
         }

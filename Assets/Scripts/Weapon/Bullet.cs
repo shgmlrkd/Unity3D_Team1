@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +9,8 @@ public class Bullet : MonoBehaviour
 
     private float _bulletSpeed;
     private float _bulletPower;
+    private float _bulletLifeTimer;
+    private float _timer = 0.0f;
 
     void Start()
     {
@@ -18,6 +19,17 @@ public class Bullet : MonoBehaviour
     
     void Update()
     {
+        if (gameObject.activeSelf)
+        {
+            _timer += Time.deltaTime;
+
+            if (_timer >= _bulletLifeTimer)
+            {
+                _timer -= _bulletLifeTimer;
+                gameObject.SetActive(false);
+            }
+        }
+
         transform.Translate(Vector3.forward * _bulletSpeed * Time.deltaTime);
     }
 
@@ -29,6 +41,7 @@ public class Bullet : MonoBehaviour
         _direction = dir.normalized;
         _bulletSpeed = data.AttackSpeed;
         _bulletPower = data.AttackPower;
+        _bulletLifeTimer = data.LifeTime;
 
         transform.rotation = Quaternion.LookRotation(_direction);
     }
@@ -37,6 +50,7 @@ public class Bullet : MonoBehaviour
     {
         if(other.CompareTag("Monster"))
         {
+            other.GetComponent<Skeleton>().GetSkeletonDamage(_bulletPower);
             gameObject.SetActive(false);
         }
     }
