@@ -3,18 +3,18 @@ using UnityEngine;
 
 public struct MonsterData
 {
-    public int key;
-    public string name;
-    public string type;
-    public int hp;
-    public float moveSpeed;
-    public int attackPower;
-    public float attackInterval;
-    public int distance;
-    public int lifeTime;
-    public int playerLevel;
-    public float spawnInterval;
-    public int exp;
+    public int Key;
+    public string Name;
+    public string Type;
+    public int Hp;
+    public float MoveSpeed;
+    public int AttackPower;
+    public float AttackInterval;
+    public int Distance;
+    public int LifeTime;
+    public int PlayerLevel;
+    public float SpawnInterval;
+    public int Exp;
 }
 
 public class MonsterDataManager : MonoBehaviour
@@ -53,20 +53,20 @@ public class MonsterDataManager : MonoBehaviour
                 return;
 
             MonsterData data;
-            data.key = int.Parse(colData[0]);
-            data.name = colData[1];
-            data.type = colData[2];
-            data.hp = int.Parse(colData[3]);
-            data.moveSpeed = float.Parse(colData[4]);
-            data.attackPower = int.Parse(colData[5]);
-            data.attackInterval = float.Parse(colData[6]);
-            data.distance = int.Parse(colData[7]);
-            data.lifeTime = int.Parse(colData[8]);
-            data.playerLevel = int.Parse(colData[9]);
-            data.spawnInterval = float.Parse(colData[10]);
-            data.exp = int.Parse(colData[11]);
+            data.Key = int.Parse(colData[0]);
+            data.Name = colData[1];
+            data.Type = colData[2];
+            data.Hp = int.Parse(colData[3]);
+            data.MoveSpeed = float.Parse(colData[4]);
+            data.AttackPower = int.Parse(colData[5]);
+            data.AttackInterval = float.Parse(colData[6]);
+            data.Distance = int.Parse(colData[7]);
+            data.LifeTime = int.Parse(colData[8]);
+            data.PlayerLevel = int.Parse(colData[9]);
+            data.SpawnInterval = float.Parse(colData[10]);
+            data.Exp = int.Parse(colData[11]);
 
-            _monsterDatas.Add(data.key, data);
+            _monsterDatas.Add(data.Key, data);
         }
     }
 }

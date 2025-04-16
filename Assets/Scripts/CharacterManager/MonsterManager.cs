@@ -6,6 +6,8 @@ public class MonsterManager : MonoBehaviour
     private GameObject SkeletonPrefab;
     private List<GameObject> _skeletonPool;
 
+    private readonly int _spawnPosOffset = 50;
+
     private float _timer = 0.0f;
     private float _spawnInterval = 1.5f;
 
@@ -68,10 +70,10 @@ public class MonsterManager : MonoBehaviour
     {
         switch (side)
         {
-            case 0: return new Vector3(Random.Range(0, Screen.width), Screen.height + 50, 0); //위
-            case 1: return new Vector3(Random.Range(-0, Screen.width), -50, 0); // 아래
-            case 2: return new Vector3(-50, Random.Range(-0, Screen.height), 0); // 왼쪽
-            case 3: return new Vector3(Screen.width + 50, Random.Range(0, Screen.height), 0); // 오른쪽
+            case 0: return new Vector3(Random.Range(0, Screen.width), Screen.height + _spawnPosOffset, 0); //위
+            case 1: return new Vector3(Random.Range(0, Screen.width), -(_spawnPosOffset), 0); // 아래
+            case 2: return new Vector3(-(_spawnPosOffset), Random.Range(0, Screen.height), 0); // 왼쪽
+            case 3: return new Vector3(Screen.width + _spawnPosOffset, Random.Range(0, Screen.height), 0); // 오른쪽
             default: return Vector3.zero;
         }
     }

@@ -21,7 +21,7 @@ public class Skeleton : MonoBehaviour
 
             if (direction.sqrMagnitude > 0)
             {
-                transform.position += direction.normalized * _monsterData.moveSpeed * Time.deltaTime;
+                transform.position += direction.normalized * _monsterData.MoveSpeed * Time.deltaTime;
 
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * skeletonRotateSpeed);
