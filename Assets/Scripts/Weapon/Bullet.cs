@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private List<GameObject> _monsters; 
-
     private Vector3 _direction;
 
     private float _bulletSpeed;
@@ -15,11 +13,6 @@ public class Bullet : MonoBehaviour
     private void OnEnable()
     {
         _timer = 0.0f;
-    }
-
-    void Start()
-    {
-        _monsters = MonsterManager.Instance.SkeletonPool;
     }
     
     void Update()
