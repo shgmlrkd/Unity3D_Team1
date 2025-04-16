@@ -3,8 +3,20 @@ using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
+    private static MonsterManager _instance;
+    public static MonsterManager Instance
+    { 
+        get { return _instance; }
+    }
+
+    // GameObject로 몬스터(Skeleton, Lich) 프리팹을 각각 만들고
+    // List<GameObject>에는 위의 프리팹으로 생성된 애들을 모두 집어넣음
     private GameObject SkeletonPrefab;
     private List<GameObject> _skeletonPool;
+    public List<GameObject> SkeletonPool 
+    { 
+        get { return _skeletonPool; }
+    }
 
     private readonly int _spawnPosOffset = 50;
 
@@ -17,15 +29,20 @@ public class MonsterManager : MonoBehaviour
 
     private void Awake()
     {
+        _instance = this;
+
         _groundLayer = LayerMask.GetMask("Ground");
         _skeletonPool = new List<GameObject>();
     }
 
     void Start()
     {
+        // 여기서 prefab을 MeleeMonster와 RangeMosnter를 모두 for문으로 풀링 개수만큼 뽑고
         GameObject prefab = Resources.Load<GameObject>("Prefabs/Monsters/MeleeMonster");
         SkeletonPrefab = prefab;
 
+        // 여기에는 List<GameObject>에 add하는 식으로 그러면 모든 몬스터가 이 List 안에 존재함
+        // 이후 스폰몬스터 할때 랜덤으로 스폰
         for (int i = 0; i < _poolSize; i++)
         {
             GameObject obj = Instantiate(SkeletonPrefab);
@@ -89,5 +106,26 @@ public class MonsterManager : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    public GameObject GetClosestMonster(Vector3 pos)
+    {
+        GameObject selectEnemy = null;
+        float minDistance = float.MaxValue;
+
+        foreach (GameObject monster in _skeletonPool)
+        {
+            if (!monster.activeSelf) continue;
+
+            float distance = Vector3.Distance(pos, monster.transform.position);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                selectEnemy = monster;
+            }
+
+        }
+        return selectEnemy;
     }
 }

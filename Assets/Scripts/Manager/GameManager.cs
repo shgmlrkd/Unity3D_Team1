@@ -13,9 +13,13 @@ public class GameManager : MonoBehaviour
     public GameObject Player
     { get { return _player; } }
 
+    [SerializeField]
+    private int _bulletPoolSize;
+
     void Awake()
     {
         _instance = this;
+        BulletManager.Instance.CreateBullets(_bulletPoolSize);
         SpawnPlayer();
     }
 

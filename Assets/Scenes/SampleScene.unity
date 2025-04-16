@@ -360,10 +360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 493c8faf12ca7be4b8f97b8b85058975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _aimOffset: {x: 0, y: 0, z: 0}
-  _distance: 9.89
-  _height: 16.8
-  _moveDamping: 10
 --- !u!1 &336306614
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +826,7 @@ GameObject:
   - component: {fileID: 807679326}
   - component: {fileID: 807679328}
   - component: {fileID: 807679329}
+  - component: {fileID: 807679330}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -849,6 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29913e2aa634b944180a4f7be756a509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletPoolSize: 100
 --- !u!4 &807679327
 Transform:
   m_ObjectHideFlags: 0
@@ -886,6 +884,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f51d4826f246c6b4584b729a69d37705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &807679330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807679325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df9ebdc7d44141418a1f08696598079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &832575517
