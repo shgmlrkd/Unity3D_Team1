@@ -2454,7 +2454,7 @@ GameObject:
   - component: {fileID: 1052004370}
   - component: {fileID: 1052004371}
   m_Layer: 5
-  m_Name: HpBarPanel
+  m_Name: MonsterHpBarPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2581,10 +2581,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1052004370}
   - {fileID: 283150279}
   - {fileID: 548619418}
   - {fileID: 155140604}
-  - {fileID: 1052004370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

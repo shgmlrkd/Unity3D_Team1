@@ -12,6 +12,11 @@ public class Bullet : MonoBehaviour
     private float _bulletLifeTimer;
     private float _timer = 0.0f;
 
+    private void OnEnable()
+    {
+        _timer = 0.0f;
+    }
+
     void Start()
     {
         _monsters = MonsterManager.Instance.SkeletonPool;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using TMPro;
 
 public class Player : MonoBehaviour
@@ -8,17 +9,23 @@ public class Player : MonoBehaviour
     private Slider _expSlider;
     private TextMeshProUGUI _hpText;
     private TextMeshProUGUI _expText;
+
+    private List<BulletSkill> _bulletSkills = new List<BulletSkill>();
+
+    private PlayerData _playerData;
+
     private float _maxHealth;
     private float _currentHealth;
-    private PlayerData _playerData;
     private float _curExp;
-    private int _playerLevel = 1;
     private float _offset = 1.2f;
+    private int _playerLevel = 1;
+
     private static Player _instance;
     public static Player Instance
     {
         get { return _instance; }
     }
+
     private void Awake()
     {
         _instance = this;
@@ -49,6 +56,8 @@ public class Player : MonoBehaviour
             _healthSlider.maxValue = _maxHealth;
             _healthSlider.value = _currentHealth;
         }
+
+        _bulletSkills.Add(gameObject.AddComponent<BulletSkill>());
     }
 
     void Update()

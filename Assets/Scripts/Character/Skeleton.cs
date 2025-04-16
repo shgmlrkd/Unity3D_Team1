@@ -10,7 +10,7 @@ public class Skeleton : MonoBehaviour
     private Vector3 _skeletonHpBarOffset;
     private MonsterData _monsterData;
 
-    private float skeletonRotateSpeed = 5.0f;
+    private float _skeletonRotateSpeed = 5.0f;
     private float _attackTimer = 0.0f;
     private float _skeletonMaxHp;
     private float _skeletonCurHp;
@@ -38,7 +38,7 @@ public class Skeleton : MonoBehaviour
         _skeletonMaxHp = _monsterData.Hp;
         _skeletonCurHp = _skeletonMaxHp;
 
-        GameObject skeletonhpBarPanel = GameObject.Find("HpBarPanel");
+        GameObject skeletonhpBarPanel = GameObject.Find("MonsterHpBarPanel");
         GameObject skeletonhpBar = Instantiate(_skeletonHpBarPrefab, skeletonhpBarPanel.transform);
         _skeletonHpBarSlider = skeletonhpBar.GetComponent<Slider>();
 
@@ -57,7 +57,7 @@ public class Skeleton : MonoBehaviour
                 transform.position += direction.normalized * _monsterData.MoveSpeed * Time.deltaTime;
 
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * skeletonRotateSpeed);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _skeletonRotateSpeed);
             }
         }
 

@@ -23,7 +23,7 @@ public class MonsterManager : MonoBehaviour
     private float _timer = 0.0f;
     private float _spawnInterval = 1.5f;
 
-    private int _poolSize = 15;
+    private int _poolSize = 100;
 
     private int _groundLayer;
 
