@@ -9,7 +9,7 @@ public class MonsterManager : MonoBehaviour
     private float _timer = 0.0f;
     private float _spawnInterval = 1.5f;
 
-    private int _poolSize = 5;
+    private int _poolSize = 15;
 
     private int _groundLayer;
 
@@ -49,15 +49,15 @@ public class MonsterManager : MonoBehaviour
     {
         int randomSide = Random.Range(0, 4);
         Vector3 screenPos = GetRandomScreenPositionBySide(randomSide);
-        Vector3? groundPos = GetGroundPositionFromScreen(screenPos);
+        Vector3 groundPos = GetGroundPositionFromScreen(screenPos);
 
-        if (groundPos == null) return;
+        if (groundPos == Vector3.zero) return;
 
         for (int i = 0; i < _skeletonPool.Count; i++)
         {
             if (!_skeletonPool[i].activeSelf)
             {
-                _skeletonPool[i].transform.position = groundPos.Value;
+                _skeletonPool[i].transform.position = groundPos;
                 _skeletonPool[i].SetActive(true);
                 return;
             }
@@ -68,22 +68,24 @@ public class MonsterManager : MonoBehaviour
     {
         switch (side)
         {
-            case 0: return new Vector3(Random.Range(0, Screen.width), Screen.height, 0); //위
-            case 1: return new Vector3(Random.Range(0, Screen.width), 0, 0); // 아래
-            case 2: return new Vector3(0, Random.Range(0, Screen.height), 0); // 왼쪽
-            case 3: return new Vector3(Screen.width, Random.Range(0, Screen.height), 0); // 오른쪽
+            case 0: return new Vector3(Random.Range(0, Screen.width), Screen.height + 50, 0); //위
+            case 1: return new Vector3(Random.Range(-0, Screen.width), -50, 0); // 아래
+            case 2: return new Vector3(-50, Random.Range(-0, Screen.height), 0); // 왼쪽
+            case 3: return new Vector3(Screen.width + 50, Random.Range(0, Screen.height), 0); // 오른쪽
             default: return Vector3.zero;
         }
     }
 
-    Vector3? GetGroundPositionFromScreen(Vector3 screenPos)
+    Vector3 GetGroundPositionFromScreen(Vector3 screenPos)
     {
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         RaycastHit hit;
+
         if (Physics.Raycast(ray, out hit, 1000.0f, _groundLayer))
         {
             return hit.point;
         }
-        return null;
+
+        return Vector3.zero;
     }
 }

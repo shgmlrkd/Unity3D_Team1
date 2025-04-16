@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 493c8faf12ca7be4b8f97b8b85058975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _aimOffset: {x: -0.13, y: 0, z: 0}
+  _aimOffset: {x: 0, y: 0, z: 0}
   _distance: 9.89
   _height: 16.8
   _moveDamping: 10
