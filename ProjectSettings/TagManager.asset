@@ -6,7 +6,10 @@ TagManager:
   tags:
   - Ground
   - Monster
-  - Wall
+  - LeftWall
+  - RightWall
+  - FrontWall
+  - BackWall
   layers:
   - Default
   - TransparentFX

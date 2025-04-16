@@ -1,16 +1,9 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem.Controls;
 using TMPro;
-using System.Collections.Generic;
-using static Cinemachine.DocumentationSortingAttribute;
-using System.Xml.Linq;
 
 public class Player : MonoBehaviour
 {
-    Animator _anim;
     private Slider _healthSlider;
     private Slider _expSlider;
     private TextMeshProUGUI _hpText;
@@ -34,24 +27,28 @@ public class Player : MonoBehaviour
     void Start()
     {
         _playerData = PlayerDataManager.Instance.GetPlayerData(1);
+
         _maxHealth = _playerData.Hp;
-        _healthSlider = GameObject.Find("PlayerHpBar").GetComponent<Slider>();
         _currentHealth = _maxHealth;
+
+        _curExp = 0;
+
+        _healthSlider = GameObject.Find("PlayerHpBar").GetComponent<Slider>();
         Transform hpTextTransform = _healthSlider.transform.GetChild(2); // ← 0부터 시작, 3번째 자식은 index 2
         _hpText = hpTextTransform.GetComponent<TextMeshProUGUI>();
 
         _expSlider = GameObject.Find("PlayerExpBar").GetComponent<Slider>();
-        _expSlider.value = 0;
-        _curExp = 0;
         Transform expTextTransform = _expSlider.transform.GetChild(2); // ← 0부터 시작, 3번째 자식은 index 2
         _expText = expTextTransform.GetComponent<TextMeshProUGUI>();
+
+        _expSlider.value = 0;
         _expText.text = $"{(_curExp).ToString("F2")}%";
+
         if (_healthSlider != null)
         {
             _healthSlider.maxValue = _maxHealth;
             _healthSlider.value = _currentHealth;
         }
-
     }
 
     void Update()
@@ -83,33 +80,57 @@ public class Player : MonoBehaviour
     {
         _curExp += exp;
 
-            var data = PlayerDataManager.Instance.GetPlayerData(_playerLevel);
-            if (_curExp >= data.Experience)
-            {
-                _playerLevel++;
-                _curExp %= data.Experience;
+        PlayerData data = PlayerDataManager.Instance.GetPlayerData(_playerLevel);
+        if (_curExp >= data.Experience)
+        {
+            _playerLevel++;
+            _curExp %= data.Experience;
+            gameObject.GetComponent<PlayerMove>().PlayerSpeedUp(_playerLevel);
             Debug.Log($"Level Up! Now Level {_playerLevel}");
-            }
+        }
+
         _expText.text = $"{(_curExp / data.Experience * 100f).ToString("F2")}%";
         _expSlider.value = _curExp / data.Experience;
     }
+
     private void UpdateUI()
     {
 
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("LeftWall")|| other.CompareTag("RightWall"))
         {
             Vector3 newpos = transform.position;
             newpos.x = -newpos.x;
+
+            if (newpos.x < 0)
+            {
+                newpos.x += _offset;
+            }
+            else
+            {
+               newpos.x -= _offset;
+            }
+
             transform.position = newpos;
         }
         if (other.CompareTag("FrontWall")|| other.CompareTag("BackWall"))
         {
             Vector3 newpos = transform.position;
             newpos.z = -newpos.z;
-            transform.position = newpos* _offset;
+
+            if (newpos.z < 0)
+            {
+                newpos.z += _offset;
+            }
+            else
+            {
+                newpos.z -= _offset;
+            }
+
+            transform.position = newpos;
         }
     }
 }
