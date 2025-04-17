@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 2140151744343687154}
   - component: {fileID: 2910693948928012602}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MonsterHpBarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 2254698115827086771}
   - component: {fileID: 5404721661608679468}
   m_Layer: 5
-  m_Name: MonsterHpBarBG
+  m_Name: MonsterHpBarBL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

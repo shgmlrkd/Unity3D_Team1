@@ -10,6 +10,10 @@ public class Skeleton : MonoBehaviour
     private Animator _animator;
     private Collider _skeletonCollider;
 
+    private Image _hpFillImage;
+    private Image _hpBLImage;
+    private Image _hpBGImage;
+
     private Vector3 _skeletonHpBarOffset;
     private MonsterData _monsterData;
 
@@ -17,21 +21,37 @@ public class Skeleton : MonoBehaviour
     private float _attackTimer = 0.0f;
     private float _skeletonMaxHp;
     private float _skeletonCurHp;
+
+    private float _hpBarVisibleTimer = 0.0f;
+    private float _hpBarVisibleDuration = 3.0f;
+    private bool _hpBarVisible = false;
+
+    private bool _isFadingOut = false;
+    private float _fadeSpeed = 5.0f;
+
+    private bool _isCollidingWithPlayer = false;
+
     public float SkeletonCurHp
     {
         get { return _skeletonCurHp; }
     }
-
-    private bool _isCollidingWithPlayer = false;
 
     private void OnEnable()
     {
         _skeletonCurHp = _skeletonMaxHp;
 
         if (_skeletonHpBarSlider != null)
-            _skeletonHpBarSlider.gameObject.SetActive(true);
+        {
+            _skeletonHpBarSlider.gameObject.SetActive(false);
+            SetHpBarAlpha(0.5f);
+        }
+
         if (_skeletonCollider != null)
             _skeletonCollider.enabled = true;
+
+        _hpBarVisible = false;
+        _hpBarVisibleTimer = 0.0f;
+        _isFadingOut = false;
     }
 
     private void Awake()
@@ -52,7 +72,14 @@ public class Skeleton : MonoBehaviour
         GameObject skeletonhpBar = Instantiate(_skeletonHpBarPrefab, skeletonhpBarPanel.transform);
         _skeletonHpBarSlider = skeletonhpBar.GetComponent<Slider>();
 
-        _skeletonHpBarSlider.gameObject.SetActive(true);
+        Transform imageRoot = _skeletonHpBarSlider.transform.Find("MonsterHpBarBG");
+        _hpBGImage = imageRoot.GetComponent<Image>();
+        _hpFillImage = imageRoot.Find("MonsterHp")?.GetComponent<Image>();
+        _hpBLImage = imageRoot.Find("MonsterHpBarBL")?.GetComponent<Image>();
+
+
+        _skeletonHpBarSlider.gameObject.SetActive(false);
+        SetHpBarAlpha(0.5f);
 
         _skeletonCollider = GetComponent<Collider>();
     }
@@ -76,6 +103,28 @@ public class Skeleton : MonoBehaviour
             else
             {
                 _skeletonHpBarSlider.gameObject.SetActive(false);
+            }
+        }
+
+        if (_hpBarVisible)
+        {
+            _hpBarVisibleTimer += Time.deltaTime;
+            if (_hpBarVisibleTimer >= _hpBarVisibleDuration)
+            {
+                _hpBarVisible = false;
+                _isFadingOut = true;
+            }
+        }
+
+        if (_isFadingOut)
+        {
+            float newAlpha = Mathf.Lerp(_hpFillImage.color.a, 0, Time.deltaTime * _fadeSpeed);
+            SetHpBarAlpha(newAlpha);
+
+            if (newAlpha <= 0.05f)
+            {
+                _skeletonHpBarSlider.gameObject.SetActive(false);
+                _isFadingOut = false;
             }
         }
 
@@ -116,9 +165,18 @@ public class Skeleton : MonoBehaviour
 
         if (other.CompareTag("Weapon"))
         {
+            if (_skeletonHpBarSlider != null)
+            {
+                _skeletonHpBarSlider.gameObject.SetActive(true);
+                SetHpBarAlpha(1.0f);
+
+                _hpBarVisible = true;
+                _hpBarVisibleTimer = 0.0f;
+                _isFadingOut = false;
+            }
+
             GetSkeletonDamage(other.GetComponent<Bullet>().WeaponAttackPower);
         }
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -147,16 +205,13 @@ public class Skeleton : MonoBehaviour
         if (_skeletonCurHp <= 0)
         {
             _skeletonCurHp= 0;
-
             _skeletonCollider.enabled = false;
 
             if (_animator != null)
                 _animator.SetTrigger("Die");
 
-            StartCoroutine(HandleDeath());
-
-            if (_skeletonHpBarSlider != null)
-                _skeletonHpBarSlider.gameObject.SetActive(false);
+            _skeletonHpBarSlider.gameObject.SetActive(false);
+            _hpBarVisible = false;
         }
         else
         {
@@ -167,12 +222,34 @@ public class Skeleton : MonoBehaviour
         }
     }
 
-    private IEnumerator HandleDeath()
+    public void HandleDeath()
     {
-        yield return new WaitForSeconds(2.0f);
-
         gameObject.SetActive(false);
 
         _player.GetComponent<Player>().GetExp(_monsterData.Exp);
+    }
+
+    private void SetHpBarAlpha(float alpha)
+    {
+        if (_hpBLImage != null)
+        {
+            Color hpBLImageColor = _hpBLImage.color;
+            hpBLImageColor.a = alpha;
+            _hpBLImage.color = hpBLImageColor;
+        }
+
+        if (_hpFillImage != null)
+        {
+            Color hpFillImageColor = _hpFillImage.color;
+            hpFillImageColor.a = alpha;
+            _hpFillImage.color = hpFillImageColor;
+        }
+
+        if (_hpBGImage != null)
+        {
+            Color hpBGImageColor = _hpBGImage.color;
+            hpBGImageColor.a = alpha;
+            _hpBGImage.color = hpBGImageColor;
+        }
     }
 }
