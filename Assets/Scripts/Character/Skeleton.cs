@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Skeleton : MonoBehaviour
 {
     private Transform _player;
     private GameObject _skeletonHpBarPrefab;
     private Slider _skeletonHpBarSlider;
+    private Animator _animator;
 
     private Vector3 _skeletonHpBarOffset;
     private MonsterData _monsterData;
@@ -27,6 +29,7 @@ public class Skeleton : MonoBehaviour
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         _skeletonHpBarPrefab = Resources.Load<GameObject>("Prefabs/Monsters/MonsterHpBar");
         _skeletonHpBarOffset = new Vector3(0, 2.5f, 1);
     }
@@ -47,7 +50,13 @@ public class Skeleton : MonoBehaviour
 
     void Update()
     {
-        if (_player != null)
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        bool isInDamage = stateInfo.IsName("GetDamage");
+        bool isInDead = stateInfo.IsName("Dead");
+
+        if (isInDamage || isInDead) return;
+
+        if (_player != null && _skeletonCurHp > 0)
         {
             Vector3 direction = _player.position - transform.position;
             direction.y = 0;
@@ -61,7 +70,7 @@ public class Skeleton : MonoBehaviour
             }
         }
 
-        if (_isCollidingWithPlayer)
+        if (_isCollidingWithPlayer && _skeletonCurHp > 0)
         {
             _attackTimer += Time.deltaTime;
             if(_attackTimer >= _monsterData.AttackInterval)
@@ -116,16 +125,38 @@ public class Skeleton : MonoBehaviour
 
     public void GetSkeletonDamage(float attackPower)
     {
+        if (_skeletonCurHp <= 0) return;
+
         _skeletonCurHp -= attackPower;
 
-        if (_skeletonCurHp < 0)
+        if (_skeletonCurHp <= 0)
         {
-            gameObject.SetActive(false);
+            _skeletonCurHp= 0;
 
-            _player.GetComponent<Player>().GetExp(_monsterData.Exp);
+            if (_animator != null)
+                _animator.SetTrigger("Die");
+
+            StartCoroutine(HandleDeath());
 
             if (_skeletonHpBarSlider != null)
                 _skeletonHpBarSlider.gameObject.SetActive(false);
         }
+    }
+
+    public void PlayHitAnimationImmediately()
+    {
+        if (_animator != null && _skeletonCurHp > 0)
+        {
+            _animator.SetTrigger("Hit");
+        }
+    }
+
+    private IEnumerator HandleDeath()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        gameObject.SetActive(false);
+
+        _player.GetComponent<Player>().GetExp(_monsterData.Exp);
     }
 }
