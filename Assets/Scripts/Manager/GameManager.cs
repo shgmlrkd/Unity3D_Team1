@@ -14,12 +14,15 @@ public class GameManager : MonoBehaviour
     { get { return _player; } }
 
     [SerializeField]
-    private int _bulletPoolSize;
+    private int _bulletPoolSize; 
+    [SerializeField]
+    private int _kunaiPoolSize;
 
     void Awake()
     {
         _instance = this;
-        BulletManager.Instance.CreateBullets(_bulletPoolSize);
+        WeaponManager.Instance.CreateWeapons(_bulletPoolSize, "Bullet");
+        WeaponManager.Instance.CreateWeapons(_kunaiPoolSize, "Kunai");
         SpawnPlayer();
     }
 

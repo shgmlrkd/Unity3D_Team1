@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 181885952}
   - component: {fileID: 181885954}
   - component: {fileID: 181885953}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Left
   m_TagString: LeftWall
   m_Icon: {fileID: 0}
@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 196696403}
   - component: {fileID: 196696405}
   - component: {fileID: 196696404}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Right
   m_TagString: RightWall
   m_Icon: {fileID: 0}
@@ -1134,7 +1134,7 @@ GameObject:
   - component: {fileID: 433941015}
   - component: {fileID: 433941017}
   - component: {fileID: 433941016}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Front
   m_TagString: FrontWall
   m_Icon: {fileID: 0}
@@ -1502,7 +1502,7 @@ GameObject:
   - component: {fileID: 469632287}
   - component: {fileID: 469632289}
   - component: {fileID: 469632288}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: New VFX 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1616,7 +1616,7 @@ GameObject:
   - component: {fileID: 491061064}
   - component: {fileID: 491061066}
   - component: {fileID: 491061065}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Back
   m_TagString: BackWall
   m_Icon: {fileID: 0}
@@ -2044,7 +2044,7 @@ Transform:
   m_GameObject: {fileID: 792892448}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0, z: 0.04}
+  m_LocalPosition: {x: 0.06, y: 0.02, z: 0.04}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2084,6 +2084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPoolSize: 50
+  _kunaiPoolSize: 50
 --- !u!4 &807679327
 Transform:
   m_ObjectHideFlags: 0
@@ -2721,7 +2722,7 @@ GameObject:
   - component: {fileID: 1140995402}
   - component: {fileID: 1140995404}
   - component: {fileID: 1140995403}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: New VFX 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3032,7 +3033,7 @@ GameObject:
   - component: {fileID: 1456534626}
   - component: {fileID: 1456534628}
   - component: {fileID: 1456534627}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: New VFX 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3644,7 +3645,7 @@ GameObject:
   - component: {fileID: 1860202472}
   - component: {fileID: 1860202474}
   - component: {fileID: 1860202473}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: New VFX 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

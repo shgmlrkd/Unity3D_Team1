@@ -1,17 +1,18 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : ThrowWeapon
+public class Kunai : ThrowWeapon
 {
+    private int _pierce = 0;
+
     private void OnEnable()
     {
         _timer = 0.0f;
+        _pierce = 0;
     }
-    
+
     void Update()
     {
-        LifeTimer();
-
+        LifeTimer(); 
         transform.Translate(Vector3.forward * _weaponSpeed * Time.deltaTime);
     }
 
@@ -20,10 +21,11 @@ public class Bullet : ThrowWeapon
         gameObject.SetActive(true);
 
         transform.position = pos;
-        _direction = dir.normalized;
+        _direction = dir;
         _weaponSpeed = data.AttackSpeed;
         _weaponAttackPower = data.AttackPower;
         _weaponLifeTimer = data.LifeTime;
+        _weaponPierce = data.Pierce;
 
         transform.rotation = Quaternion.LookRotation(_direction);
     }
@@ -32,9 +34,14 @@ public class Bullet : ThrowWeapon
     {
         base.OnTriggerEnter(other);
 
-        if (other.CompareTag("Monster"))
+        if(other.CompareTag("Monster"))
         {
-            gameObject.SetActive(false);
+            if( _pierce == _weaponPierce)
+            {
+                gameObject.SetActive(false);
+            }
+
+            _pierce++;
         }
     }
 }

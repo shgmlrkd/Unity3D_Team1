@@ -16,7 +16,7 @@ public class Skill : MonoBehaviour
     {
         _level++;
 
-        if (_level > 5)
-            _level = 5;
+        if (_level > 4)
+            _level = 4;
     }
 }

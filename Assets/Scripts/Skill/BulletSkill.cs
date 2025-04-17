@@ -18,6 +18,21 @@ public class BulletSkill : Skill
         StartCoroutine(FireLoop());
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            BulletLevelUp();
+        }
+    }
+
+    private void BulletLevelUp()
+    {
+        LevelUp();
+        _weaponData = WeaponDataManager.Instance.GetWeaponData(_bulletIndexKey + _level);
+        InitInterval(_weaponData);
+    }
+
     private IEnumerator FireLoop()
     {
         while (true)
@@ -36,6 +51,7 @@ public class BulletSkill : Skill
             return;
 
         Vector3 dir = target.transform.position - transform.position;
-        BulletManager.Instance.Fire(transform.position, dir, _weaponData);
+
+        WeaponManager.Instance.BulletFire(transform.position, dir, _weaponData);
     }
 }
