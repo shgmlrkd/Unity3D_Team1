@@ -177,7 +177,7 @@ public class Skeleton : MonoBehaviour
                 _isFadingOut = false;
             }
 
-            GetSkeletonDamage(other.GetComponent<Bullet>().WeaponAttackPower);
+            GetSkeletonDamage(other.GetComponent<Weapon>().WeaponAttackPower);
         }
     }
 

@@ -16,13 +16,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int _bulletPoolSize; 
     [SerializeField]
-    private int _kunaiPoolSize;
+    private int _kunaiPoolSize; 
+    [SerializeField]
+    private int _fireBallPoolSize;
 
     void Awake()
     {
         _instance = this;
         WeaponManager.Instance.CreateWeapons(_bulletPoolSize, "Bullet");
         WeaponManager.Instance.CreateWeapons(_kunaiPoolSize, "Kunai");
+        WeaponManager.Instance.CreateWeapons(_fireBallPoolSize, "FireBall");
         SpawnPlayer();
     }
 

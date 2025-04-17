@@ -8,7 +8,7 @@ using System.Linq;
 public class Player : MonoBehaviour
 {
 
-    private List<BulletSkill> _bulletSkills = new List<BulletSkill>();
+    private List<Skill> _skills = new List<Skill>();
 
     private PlayerData _playerData;
     
@@ -27,12 +27,14 @@ public class Player : MonoBehaviour
 
     void Start()
     {                
-        _bulletSkills.Add(gameObject.AddComponent<BulletSkill>());
+        _skills.Add(gameObject.AddComponent<BulletSkill>());
+        _skills.Add(gameObject.AddComponent<KunaiSkill>());
+        _skills.Add(gameObject.AddComponent<FireBallSkill>());
     }
 
     void Update()
     {
-        
+        // 나중을 위하여 . . .
     }    
 
     private void OnTriggerEnter(Collider other)

@@ -10,12 +10,6 @@ public class Kunai : ThrowWeapon
         _pierce = 0;
     }
 
-    void Update()
-    {
-        LifeTimer(); 
-        transform.Translate(Vector3.forward * _weaponSpeed * Time.deltaTime);
-    }
-
     public void Fire(Vector3 pos, Vector3 dir, WeaponData data)
     {
         gameObject.SetActive(true);
@@ -30,7 +24,7 @@ public class Kunai : ThrowWeapon
         transform.rotation = Quaternion.LookRotation(_direction);
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
 

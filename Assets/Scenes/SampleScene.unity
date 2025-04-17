@@ -1013,7 +1013,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5168322, y: 0, z: 0, w: 0.8560868}
-  m_LocalPosition: {x: 0, y: 10.000001, z: 0.0000011920929}
+  m_LocalPosition: {x: 0, y: 17.04, z: 0.0000011920929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1576,7 +1576,7 @@ GameObject:
   - component: {fileID: 469632289}
   - component: {fileID: 469632288}
   m_Layer: 7
-  m_Name: New VFX 1
+  m_Name: WallParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2158,6 +2158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletPoolSize: 50
   _kunaiPoolSize: 50
+  _fireBallPoolSize: 50
 --- !u!4 &807679327
 Transform:
   m_ObjectHideFlags: 0
@@ -2797,7 +2798,7 @@ GameObject:
   - component: {fileID: 1140995404}
   - component: {fileID: 1140995403}
   m_Layer: 7
-  m_Name: New VFX 1
+  m_Name: WallParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3108,7 +3109,7 @@ GameObject:
   - component: {fileID: 1456534628}
   - component: {fileID: 1456534627}
   m_Layer: 7
-  m_Name: New VFX 1
+  m_Name: WallParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3720,7 +3721,7 @@ GameObject:
   - component: {fileID: 1860202474}
   - component: {fileID: 1860202473}
   m_Layer: 7
-  m_Name: New VFX 1
+  m_Name: WallParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
