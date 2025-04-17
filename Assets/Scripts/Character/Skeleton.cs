@@ -8,6 +8,7 @@ public class Skeleton : MonoBehaviour
     private GameObject _skeletonHpBarPrefab;
     private Slider _skeletonHpBarSlider;
     private Animator _animator;
+    private Collider _skeletonCollider;
 
     private Vector3 _skeletonHpBarOffset;
     private MonsterData _monsterData;
@@ -16,6 +17,10 @@ public class Skeleton : MonoBehaviour
     private float _attackTimer = 0.0f;
     private float _skeletonMaxHp;
     private float _skeletonCurHp;
+    public float SkeletonCurHp
+    {
+        get { return _skeletonCurHp; }
+    }
 
     private bool _isCollidingWithPlayer = false;
 
@@ -25,6 +30,8 @@ public class Skeleton : MonoBehaviour
 
         if (_skeletonHpBarSlider != null)
             _skeletonHpBarSlider.gameObject.SetActive(true);
+        if (_skeletonCollider != null)
+            _skeletonCollider.enabled = true;
     }
 
     private void Awake()
@@ -46,6 +53,8 @@ public class Skeleton : MonoBehaviour
         _skeletonHpBarSlider = skeletonhpBar.GetComponent<Slider>();
 
         _skeletonHpBarSlider.gameObject.SetActive(true);
+
+        _skeletonCollider = GetComponent<Collider>();
     }
 
     void Update()
@@ -132,6 +141,8 @@ public class Skeleton : MonoBehaviour
         if (_skeletonCurHp <= 0)
         {
             _skeletonCurHp= 0;
+
+            _skeletonCollider.enabled = false;
 
             if (_animator != null)
                 _animator.SetTrigger("Die");

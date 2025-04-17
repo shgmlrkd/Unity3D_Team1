@@ -115,7 +115,7 @@ public class MonsterManager : MonoBehaviour
 
         foreach (GameObject monster in _skeletonPool)
         {
-            if (!monster.activeSelf) continue;
+            if (!monster.activeSelf || monster.GetComponent<Skeleton>().SkeletonCurHp <= 0) continue;
 
             float distance = Vector3.Distance(pos, monster.transform.position);
 
