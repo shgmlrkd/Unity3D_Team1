@@ -1,15 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
 
-public class BulletSkill : Skill
+public class ArrowSkill : Skill
 {
-    private int _bulletIndexKey = 301;
+    private int _arrowIndexKey = 306;
 
     private void Awake()
     {
-        _weaponData = WeaponDataManager.Instance.GetWeaponData(_bulletIndexKey);
+        _weaponData = WeaponDataManager.Instance.GetWeaponData(_arrowIndexKey);
         InitInterval(_weaponData);
     }
 

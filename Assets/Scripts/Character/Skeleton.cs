@@ -63,6 +63,22 @@ public class Skeleton : MonoBehaviour
         bool isInDamage = stateInfo.IsName("GetDamage");
         bool isInDead = stateInfo.IsName("Dead");
 
+        if (_skeletonHpBarSlider != null && _skeletonHpBarSlider.gameObject.activeSelf)
+        {
+            Vector3 worldPosition = transform.position + _skeletonHpBarOffset;
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+
+            if (screenPosition.z > 0)
+            {
+                _skeletonHpBarSlider.transform.position = screenPosition;
+                _skeletonHpBarSlider.value = _skeletonCurHp / _skeletonMaxHp;
+            }
+            else
+            {
+                _skeletonHpBarSlider.gameObject.SetActive(false);
+            }
+        }
+
         if (isInDamage || isInDead) return;
 
         if (_player != null && _skeletonCurHp > 0)
@@ -88,22 +104,6 @@ public class Skeleton : MonoBehaviour
                 _attackTimer = 0.0f;
             }
         }
-
-        if (_skeletonHpBarSlider != null && _skeletonHpBarSlider.gameObject.activeSelf)
-        {
-            Vector3 worldPosition = transform.position + _skeletonHpBarOffset;
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
-        
-            if (screenPosition.z > 0)
-            {
-                _skeletonHpBarSlider.transform.position = screenPosition;
-                _skeletonHpBarSlider.value = _skeletonCurHp / _skeletonMaxHp;
-            }
-            else
-            {
-                _skeletonHpBarSlider.gameObject.SetActive(false);
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -113,6 +113,12 @@ public class Skeleton : MonoBehaviour
             _isCollidingWithPlayer = true;
             _attackTimer = _monsterData.AttackInterval;
         }
+
+        if (other.CompareTag("Weapon"))
+        {
+            GetSkeletonDamage(other.GetComponent<Bullet>().WeaponAttackPower);
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -132,7 +138,7 @@ public class Skeleton : MonoBehaviour
         }
     }
 
-    public void GetSkeletonDamage(float attackPower)
+    private void GetSkeletonDamage(float attackPower)
     {
         if (_skeletonCurHp <= 0) return;
 
@@ -152,13 +158,12 @@ public class Skeleton : MonoBehaviour
             if (_skeletonHpBarSlider != null)
                 _skeletonHpBarSlider.gameObject.SetActive(false);
         }
-    }
-
-    public void PlayHitAnimationImmediately()
-    {
-        if (_animator != null && _skeletonCurHp > 0)
+        else
         {
-            _animator.SetTrigger("Hit");
+            if (_animator != null)
+            {
+                _animator.SetTrigger("Hit");
+            }
         }
     }
 
