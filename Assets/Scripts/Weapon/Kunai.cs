@@ -20,6 +20,7 @@ public class Kunai : ThrowWeapon
         _weaponAttackPower = data.AttackPower;
         _weaponLifeTimer = data.LifeTime;
         _weaponPierce = data.Pierce;
+        _direction.y = 0.0f;
 
         transform.rotation = Quaternion.LookRotation(_direction);
     }

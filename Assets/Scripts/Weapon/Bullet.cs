@@ -17,6 +17,7 @@ public class Bullet : ThrowWeapon
         _weaponSpeed = data.AttackSpeed;
         _weaponAttackPower = data.AttackPower;
         _weaponLifeTimer = data.LifeTime;
+        _direction.y = 0.0f;
 
         transform.rotation = Quaternion.LookRotation(_direction);
     }

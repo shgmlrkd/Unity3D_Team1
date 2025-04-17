@@ -7,6 +7,8 @@ public class FireBall : ThrowWeapon
     private SphereCollider[] _fireBallColliders;
     private ParticleSystem _fireBallExplosionParticle;
 
+    private bool _isStartPlayParticle = false;
+
     private enum FireBallChild
     {
         FireBallSphere, FireBallExplosionVFX
@@ -32,16 +34,17 @@ public class FireBall : ThrowWeapon
 
     private void OnEnable()
     {
+        _isStartPlayParticle = false;
         _fireBallChildren[(int)FireBallChild.FireBallSphere].SetActive(true);
         _fireBallChildren[(int)FireBallChild.FireBallExplosionVFX].SetActive(false);
     }
 
     private new void Update()
     {
-        /*if (!_fireBallExplosionParticle.isPlaying)
+        if (_isStartPlayParticle && !_fireBallExplosionParticle.isPlaying)
         {
             gameObject.SetActive(false);
-        }*/
+        }
 
         if (_fireBallChildren[(int)FireBallChild.FireBallSphere].activeSelf)
         {
@@ -53,6 +56,8 @@ public class FireBall : ThrowWeapon
                 _fireBallChildren[(int)FireBallChild.FireBallSphere].SetActive(false);
             }
         }
+
+        if (_isStartPlayParticle) return;
 
         transform.Translate(Vector3.forward * _weaponSpeed * Time.deltaTime);
     }
@@ -67,6 +72,7 @@ public class FireBall : ThrowWeapon
         _weaponAttackPower = data.AttackPower;
         _weaponLifeTimer = data.LifeTime;
         _fireBallColliders[(int)FireBallChild.FireBallExplosionVFX].radius = data.AttackRange;
+        _direction.y = 0.0f;
 
         transform.rotation = Quaternion.LookRotation(_direction);
     }
@@ -78,8 +84,10 @@ public class FireBall : ThrowWeapon
         if (other.CompareTag("Monster"))
         {
             _fireBallChildren[(int)FireBallChild.FireBallSphere].SetActive(false);
+            print("펑!");
             _fireBallChildren[(int)FireBallChild.FireBallExplosionVFX].SetActive(true);
-            print("아야!");
+            print("터지는 효과");
+            _isStartPlayParticle = true;
             StartCoroutine(ExplosionColliderOffTimer());
         }
     }
