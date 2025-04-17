@@ -9,6 +9,7 @@ public class Skeleton : MonoBehaviour
     private Slider _skeletonHpBarSlider;
     private Animator _animator;
     private Collider _skeletonCollider;
+    private PlayerHpExp _playerHpExp;
 
     private Image _hpFillImage;
     private Image _hpBLImage;
@@ -64,6 +65,7 @@ public class Skeleton : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        _playerHpExp = GameObject.FindWithTag("Player").GetComponent<PlayerHpExp>();
         _monsterData = MonsterDataManager.Instance.GetMonsterData(201);
         _skeletonMaxHp = _monsterData.Hp;
         _skeletonCurHp = _skeletonMaxHp;
@@ -192,7 +194,7 @@ public class Skeleton : MonoBehaviour
     {
         if (Player.Instance != null)
         {
-            Player.Instance.TakeDamage(_monsterData.AttackPower);
+            _playerHpExp.TakeDamage(_monsterData.AttackPower);
         }
     }
 
@@ -226,7 +228,7 @@ public class Skeleton : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        _player.GetComponent<Player>().GetExp(_monsterData.Exp);
+        _playerHpExp.GetComponent<PlayerHpExp>().GetExp(_monsterData.Exp);
     }
 
     private void SetHpBarAlpha(float alpha)

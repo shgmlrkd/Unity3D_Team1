@@ -11,6 +11,7 @@ TagManager:
   - FrontWall
   - BackWall
   - Weapon
+  - DeathScreen
   layers:
   - Default
   - TransparentFX
