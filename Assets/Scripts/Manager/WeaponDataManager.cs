@@ -17,7 +17,6 @@ public struct WeaponData
     public float LifeTime;
 }
 
-
 public class WeaponDataManager : MonoBehaviour
 {
     private static WeaponDataManager _instance;
