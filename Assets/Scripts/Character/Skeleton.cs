@@ -151,8 +151,8 @@ public class Skeleton : MonoBehaviour
             _attackTimer += Time.deltaTime;
             if(_attackTimer >= _monsterData.AttackInterval)
             {
+                _attackTimer -= _monsterData.AttackInterval;
                 SkeletonAttackPlayer();
-                _attackTimer = 0.0f;
             }
         }
     }
