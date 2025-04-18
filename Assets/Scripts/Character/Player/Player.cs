@@ -27,8 +27,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {                
-        _skills.Add(gameObject.AddComponent<BulletSkill>());
-        _skills.Add(gameObject.AddComponent<KunaiSkill>());
+        //_skills.Add(gameObject.AddComponent<BulletSkill>());
+        //_skills.Add(gameObject.AddComponent<KunaiSkill>());
         _skills.Add(gameObject.AddComponent<FireBallSkill>());
     }
 
